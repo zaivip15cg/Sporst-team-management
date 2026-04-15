@@ -6,7 +6,12 @@ public enum ErrorCode {
     VALIDATE_Error(1002,"Thieu chu rồi"),
     User_NOT_Exist(1003, "Khong co ton tai user nay"),
     UnAuthenticated(1004, "Unauthenticated"),
-    TOKEN_NOT_EXIST(1005,"sai token")
+    TOKEN_NOT_EXIST(1005,"sai token"),
+    PASSWORD_NOT_TRUE( 1006, "Password  sai"),
+    PASSWORD_NOT_MATCH(1007,"Password does not match")
+
+
+
     ;
 
 

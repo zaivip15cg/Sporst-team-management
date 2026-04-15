@@ -2,6 +2,7 @@ package com.example.identityservice.controller;
 
 import com.example.identityservice.dto.APIResponse;
 import com.example.identityservice.dto.request.UserCreationRequest;
+import com.example.identityservice.dto.request.UserResetPassword;
 import com.example.identityservice.dto.request.UserUpdateRequest;
 import com.example.identityservice.dto.response.UserResponse;
 import com.example.identityservice.service.UserService;

@@ -4,6 +4,7 @@ import com.example.identityservice.Exception.AppException;
 import com.example.identityservice.Exception.ErrorCode;
 import com.example.identityservice.Exception.UserNotFoundException;
 import com.example.identityservice.dto.request.UserCreationRequest;
+import com.example.identityservice.dto.request.UserResetPassword;
 import com.example.identityservice.dto.request.UserUpdateRequest;
 import com.example.identityservice.dto.response.UserResponse;
 import com.example.identityservice.entity.User;
@@ -84,9 +85,13 @@ public class UserService {
 
         return userMapper.toUserResponse(userRepository.save(user));
     }
-    public void resetPassword(String userId, UserResetPassword request){
-        User user = userRepository.findById((userId)).orElseThrow(()) ->new UserNotFoundException(" Tai khoan khong ton tai nen khong the resetpassword"));
+    public UserResponse resetPassword(String userId, UserResetPassword request){
+        User user = userRepository.findById((userId)).orElseThrow(() ->new UserNotFoundException(" Tai khoan khong ton tai nen khong the resetpassword"));
+        if(!request.getNewPassword().equals(request.getConfirmPassword())){throw new AppException(ErrorCode.PASSWORD_NOT_MATCH);
+
+        }
         userMapper.resetPassword(user, request);
+
         return userMapper.toUserResponse(userRepository.save(user));
 
 

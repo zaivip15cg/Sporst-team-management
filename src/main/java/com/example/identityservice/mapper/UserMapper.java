@@ -1,6 +1,7 @@
 package com.example.identityservice.mapper;
 
 import com.example.identityservice.dto.request.UserCreationRequest;
+import com.example.identityservice.dto.request.UserResetPassword;
 import com.example.identityservice.dto.request.UserUpdateRequest;
 import com.example.identityservice.dto.response.UserResponse;
 import com.example.identityservice.entity.User;
