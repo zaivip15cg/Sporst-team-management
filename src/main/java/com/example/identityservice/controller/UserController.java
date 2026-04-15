@@ -1,10 +1,9 @@
 package com.example.identityservice.controller;
 
 import com.example.identityservice.dto.APIResponse;
-import com.example.identityservice.dto.UserCreationRequest;
-import com.example.identityservice.dto.UserUpdateRequest;
+import com.example.identityservice.dto.request.UserCreationRequest;
+import com.example.identityservice.dto.request.UserUpdateRequest;
 import com.example.identityservice.dto.response.UserResponse;
-import com.example.identityservice.entity.User;
 import com.example.identityservice.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -23,49 +22,57 @@ import java.util.List;
 @Slf4j
 public class UserController {
 
-     UserService userService;
+    UserService userService;
 
 
     @PostMapping
-    APIResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request){
+    APIResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
         APIResponse<UserResponse> apiResponse = new APIResponse<>();
 
         apiResponse.setResult(userService.createUser(request));
         return apiResponse;
 
     }
-    @GetMapping
-    APIResponse<List<UserResponse>>getUsers(){
-       var authentication = SecurityContextHolder.getContext().getAuthentication();
 
-       log.info("Username:{}",authentication.getName());
-       authentication.getAuthorities().forEach(grantedAuthority ->
-               log.info(grantedAuthority.getAuthority()));
-       return APIResponse.<List<UserResponse>>builder().result(userService.getUsers()).build();
+    @GetMapping
+    APIResponse<List<UserResponse>> getUsers() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        log.info("Username:{}", authentication.getName());
+        authentication.getAuthorities().forEach(grantedAuthority ->
+                log.info(grantedAuthority.getAuthority()));
+        return APIResponse.<List<UserResponse>>builder().result(userService.getUsers()).build();
 
     }
+
     @GetMapping("/{userId}")
-    UserResponse getUser(@PathVariable("userId") String userId){
+    UserResponse getUser(@PathVariable("userId") String userId) {
         return userService.getUser(userId);
     }
-    @PutMapping("/{userId}")
-    UserResponse updateUser(@PathVariable String userId, @RequestBody UserUpdateRequest request){
 
-           return userService.updateUser(userId, request);
+    @PutMapping("/{userId}")
+    UserResponse updateUser(@PathVariable String userId, @RequestBody UserUpdateRequest request) {
+
+        return userService.updateUser(userId, request);
     }
+    @PutMapping("/{resetpassword}" )
+    UserResponse resetPassword(@PathVariable String userId, @RequestBody UserResetPassword request){
+        return userService.resetPassword(userId, request);
+    }
+
     @DeleteMapping("/{userId}")
-    String deleteUser(@PathVariable String userId){
+    String deleteUser(@PathVariable String userId) {
         userService.deleteUser(userId);
         return "User hass been deleted";
     }
 
     @GetMapping("/myInfo")
-    APIResponse<UserResponse> getMyInfo(@PathVariable("userid") String userId ){
+    APIResponse<UserResponse> getMyInfo(@PathVariable("userid") String userId) {
         return APIResponse.<UserResponse>builder()
                 .result(userService.getMyInfo())
                 .build();
     }
 
 
-}
 
+}
