@@ -65,6 +65,19 @@ public class UserServiceTest {
                 .dob(dob)
                 .build();
     }
+    void initData() {
+        dob = LocalDate.of(1990, 1, 1);
+
+        request = UserCreationRequest.builder()
+                .username("n")
+                .firstName("John")
+                .lastName("Doe")
+                .password("178")
+                .dob(dob)
+                .build();
+
+
+    }
 
     @Test
     void createUser_validRequest_success() {

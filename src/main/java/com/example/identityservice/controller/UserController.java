@@ -56,7 +56,17 @@ public class UserController {
 
         return userService.updateUser(userId, request);
     }
+
+    @PostMapping("/{forgotpassword")
+
+    public String forgotPassword(@RequestParam String email) {
+        userService.sendResetPasswordMail(email);
+        return "Mail sent";
+    }
+
     @PutMapping("/{resetpassword}" )
+
+
     UserResponse resetPassword(@PathVariable String userId, @RequestBody UserResetPassword request){
         return userService.resetPassword(userId, request);
     }

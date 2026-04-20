@@ -14,4 +14,30 @@ spring:
        show-sql: true
 
 
-   jwt: { signerKey: "7y6-jr;z1B?-RtObGN|:]-T!{v!+vPc$" }
+   jwt: { signerKey: "7y6-jr;z1B?-RtObGN|:]-T!{v!+vPc$"
+
+
+  mailServer:
+    host: smtp.gmail.com
+    port: 587
+    mail_email: mailsender.tutorials.b2a@gmail.com
+    mail_password: Admin@123
+    protocol: smtp
+    iSSl: false
+      
+      
+      
+      
+  spring:
+    mail:
+      host: localhost
+      port: 1025
+      username:
+      password:
+      properties:
+        mail:
+          smtp:
+            auth: false
+            starttls:
+              enable: false
+
