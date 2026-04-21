@@ -2,18 +2,14 @@ package com.example.identityservice.configuration;
 
 import com.example.identityservice.entity.User;
 import com.example.identityservice.enums.Role;
-import com.example.identityservice.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.HashSet;
 
 @Configuration
 @RequiredArgsConstructor
@@ -24,21 +20,27 @@ public class ApplicationInitConfig {
     PasswordEncoder passwordEncoder;
     @Bean
 
-    ApplicationRunner applicationRunner(UserRepository userRepository) {
+    ApplicationRunner applicationRunner(com.example.identityservice.repository.UserRepository userRepository) {
         return args -> {
 
             String adminname = "admin06072026";
+            String adminEmail = "admin@identity.local";
 
 
-            if (userRepository.findByUsername(adminname).isEmpty()) {
-                var roles = new HashSet<String>();
-                roles.add(Role.ADMIN.name());
+            try {
+                if (userRepository.findByEmail(adminEmail).isEmpty()) {
+                    User user = User.builder()
+                            .name(adminname)
+                            .email(adminEmail)
+                            .password(passwordEncoder.encode("admin"))
+                            .role(Role.ADMIN)
+                            .build();
 
-                User user = User.builder().username(adminname).
-                        password(passwordEncoder.encode("admin")).roles(roles).build();
-
-                 userRepository.save(user);
-                 log.warn("admin user has been created with default password:admin, please change it");
+                    userRepository.save(user);
+                    log.warn("admin user has been created with default password:admin, please change it");
+                }
+            } catch (Exception ex) {
+                log.warn("Skip admin init because current schema/data is incompatible: {}", ex.getMessage());
             }
 
 

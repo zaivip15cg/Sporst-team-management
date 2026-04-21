@@ -2,42 +2,26 @@ server:
   port: 8080
   servlet:
     context-path: /identity
+
 spring:
-   datasource:
+  datasource:
     url: "jdbc:mysql://127.0.0.1:3307/identity_service"
     username: root
     password: ngocrong2
 
-   jpa:
-     hibernate:
-       ddl-auto: update
-       show-sql: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
+jwt:
+  signerKey: "7y6-jr;z1B?-RtObGN|:]-T!{v!+vPc$"
 
-   jwt: { signerKey: "7y6-jr;z1B?-RtObGN|:]-T!{v!+vPc$"
-
-
-  mailServer:
-    host: smtp.gmail.com
-    port: 587
-    mail_email: mailsender.tutorials.b2a@gmail.com
-    mail_password: Admin@123
-    protocol: smtp
-    iSSl: false
-      
-      
-      
-      
-  spring:
-    mail:
-      host: localhost
-      port: 1025
-      username:
-      password:
-      properties:
-        mail:
-          smtp:
-            auth: false
-            starttls:
-              enable: false
+mailServer:
+  host: 127.0.0.1
+  port: 1025
+  mail_email: noreply@identity.local
+  mail_password: ""
+  protocol: smtp
+  isSSL: false
 

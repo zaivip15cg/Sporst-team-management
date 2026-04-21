@@ -3,16 +3,16 @@ package com.example.identityservice.entity;
 import com.example.identityservice.enums.Role;
 import com.example.identityservice.enums.Status;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
+@Table(name = "user")
 
 @Getter
 @Setter
@@ -22,13 +22,13 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
 // soft delete
-@SQLDelete(sql = "UPDATE users SET deleted_at = NOW() WHERE id = ?")
+@SQLDelete(sql = "UPDATE user SET deleted_at = NOW() WHERE id = ?")
 @Where(clause = "deleted_at IS NULL")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    String id;
 
     @Column(length = 100)
     String name;
@@ -67,7 +67,4 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "deleted_by")
     User deletedBy;
-
-    public void setRole(HashSet<String> roles) {
-    }
 }

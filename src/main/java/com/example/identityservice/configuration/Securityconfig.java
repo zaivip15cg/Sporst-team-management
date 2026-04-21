@@ -1,12 +1,9 @@
 package com.example.identityservice.configuration;
 
-import com.example.identityservice.enums.Role;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,7 +22,7 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableMethodSecurity
 public class Securityconfig {
     private  final  String[] Public_Enpoin = {"/users",
-            "/auth/introspect", "/auth/token"};
+            "/auth/introspect", "/auth/token", "/users/forgot-password", "/users/reset-password"};
 
     @Value("${jwt.signerKey:7y6-jr;z1B?-RtObGN|:]-T!{v!+vPc$}")
     private String signerKey;

@@ -10,8 +10,8 @@ import java.util.Map;
 @NoArgsConstructor
 
 public class DataMailDTO {
-    private String to;
-    private String subject;
-    private String content;
-    private Map<String, Object> props;
+    private String To;
+    private String Subject;
+    private String Content;
+    private Map<String, Object> Props;
 }

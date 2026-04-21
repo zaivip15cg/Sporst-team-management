@@ -15,5 +15,5 @@ import java.io.Serializable;
 public class MemberId implements Serializable {
 
     Integer teamId;
-    Integer userId;
+    String userId;
 }

@@ -57,28 +57,26 @@ public class UserController {
         return userService.updateUser(userId, request);
     }
 
-    @PostMapping("/{forgotpassword")
-
-    public String forgotPassword(@RequestParam String email) {
+    @PostMapping("/forgot-password")
+    APIResponse<String> forgotPassword(@RequestParam String email) {
         userService.sendResetPasswordMail(email);
-        return "Mail sent";
+        return APIResponse.<String>builder().result("Email hướng dẫn đã được gửi").build();
     }
 
-    @PutMapping("/{resetpassword}" )
-
-
-    UserResponse resetPassword(@PathVariable String userId, @RequestBody UserResetPassword request){
-        return userService.resetPassword(userId, request);
+    @PostMapping("/reset-password")
+    APIResponse<UserResponse> resetPassword(@RequestBody UserResetPassword request){
+        // Không dùng userId nữa, đổi sang POST và kiểm tra dựa vào token truyền trong body
+        return APIResponse.<UserResponse>builder().result(userService.resetPassword(request)).build();
     }
 
     @DeleteMapping("/{userId}")
     String deleteUser(@PathVariable String userId) {
         userService.deleteUser(userId);
-        return "User hass been deleted";
+        return "User has been deleted";
     }
 
     @GetMapping("/myInfo")
-    APIResponse<UserResponse> getMyInfo(@PathVariable("userid") String userId) {
+    APIResponse<UserResponse> getMyInfo() {
         return APIResponse.<UserResponse>builder()
                 .result(userService.getMyInfo())
                 .build();

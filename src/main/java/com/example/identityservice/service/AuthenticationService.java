@@ -28,7 +28,6 @@ import java.util.Date;
 import java.util.StringJoiner;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.CollectionUtils;
 
 @Slf4j
 @Service
@@ -40,7 +39,7 @@ public class AuthenticationService {
     protected static final String SIGINKEY = "7y6-jr;z1B?-RtObGN|:]-T!{v!+vPc$";
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        var user = userRepository.findByUsername(request.getUsername()).orElseThrow(() ->
+        var user = userRepository.findByEmail(request.getUsername()).orElseThrow(() ->
                 new AppException(ErrorCode.User_NOT_Exist));
 
 
@@ -60,7 +59,7 @@ public class AuthenticationService {
      private String generateToken(User user){
          JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
          JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                 .subject(user.getUsername())
+                 .subject(user.getEmail())
                  .issuer("devteria.com")
                  .issueTime(new Date())
                  .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
@@ -79,9 +78,10 @@ public class AuthenticationService {
 
      }
      private String buildScope(User user){
-         StringJoiner stringJoiner = new StringJoiner("");
-         if(!CollectionUtils.isEmpty(user.getRoles()))
-             user.getRoles().forEach(stringJoiner::add);
+         StringJoiner stringJoiner = new StringJoiner(" ");
+         if (user.getRole() != null) {
+             stringJoiner.add("ROLE_" + user.getRole().name());
+         }
          return stringJoiner.toString();
      }
      public IntrospectResponse introspectResponse(IntrospectRequest request) throws JOSEException, ParseException {
@@ -110,5 +110,3 @@ public class AuthenticationService {
 
 
      }
-
-

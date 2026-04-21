@@ -6,25 +6,24 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
-import org.springframework.mail.MailSender;
 
 @Configuration
 
 public class MailConfig {
-    @Value("${mailSever.host}")
+    @Value("${mailServer.host}")
     private String host;
 
-    @Value("${mailSever.port}")
+    @Value("${mailServer.port}")
     private Integer port;
 
-    @Value("${mailSever.mail_email}")
+    @Value("${mailServer.mail_email}")
     private String mail_email;
 
 
-    @Value(value = "${mailSever.mail_password}")
+    @Value(value = "${mailServer.mail_password}")
     private String mail_password;
 
-    @Value("${mailSever.isSSL}")
+    @Value("${mailServer.isSSL}")
     private String isSSL;
 
     @Bean
@@ -39,8 +38,8 @@ public class MailConfig {
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.auth", "false");
+        props.put("mail.smtp.starttls.enable", "false");
         props.put("mail.smtp.ssl.enable", isSSL);
         props.put("mail.smtp.from", mail_email);
         props.put("mail.debug", "true");
