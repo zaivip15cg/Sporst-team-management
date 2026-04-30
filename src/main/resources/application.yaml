@@ -1,11 +1,13 @@
 server:
   port: 8080
   servlet:
-    context-path: /identity
+    context-path: /api
 
 spring:
+  application:
+    name: sports-team-management
   datasource:
-    url: "jdbc:mysql://127.0.0.1:3307/identity_service"
+    url: "jdbc:mysql://127.0.0.1:3307/sports_team_management"
     username: root
     password: ngocrong2
 

@@ -1,0 +1,26 @@
+package com.example.sportsteammanagement.enums;
+
+public enum Toast {
+    TOKEN_SEND(10,"Đã gửi mail thành công"),
+    RESET_PWED(11, "Đã reset password thành công")
+
+
+
+
+    ; Toast(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    private int code;
+    private String message;
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+}
+
