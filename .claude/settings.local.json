@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "additionalDirectories": [
+      "c:\\Users\\chung.dangquoc\\.claude\\projects\\c--Users-chung-dangquoc-Downloads-Myproject-sports-team-management\\memory"
+    ],
+    "allow": [
+      "Bash(npm run *)"
+    ]
+  }
+}
