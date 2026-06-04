@@ -4,9 +4,12 @@ import com.example.sportsteammanagement.Exception.AppException;
 import com.example.sportsteammanagement.Exception.ErrorCode;
 import com.example.sportsteammanagement.dto.request.AuthenticationRequest;
 import com.example.sportsteammanagement.dto.request.IntrospectRequest;
+import com.example.sportsteammanagement.dto.request.LogoutRequest;
 import com.example.sportsteammanagement.dto.response.AuthenticationResponse;
 import com.example.sportsteammanagement.dto.IntrospectResponse;
+import com.example.sportsteammanagement.entity.Tokens;
 import com.example.sportsteammanagement.entity.User;
+import com.example.sportsteammanagement.repository.TokenRepository;
 import com.example.sportsteammanagement.repository.UserRepository;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -23,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.StringJoiner;
@@ -35,6 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationService {
     UserRepository userRepository;
+    TokenRepository tokenRepository;
     @NonFinal
     protected static final String SIGINKEY = "7y6-jr;z1B?-RtObGN|:]-T!{v!+vPc$";
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -49,10 +54,24 @@ public class AuthenticationService {
             throw new AppException(ErrorCode.UnAuthenticated);
 
         var token = generateToken(user );
-        return AuthenticationResponse.builder()
+        tokenRepository.save(Tokens.builder()
                 .token(token)
-                .authenticated(true)
-                .build();
+                .user(user)
+                .expiresAt(LocalDateTime.now().plusHours(1))
+                .build());
+return AuthenticationResponse.builder().token(token).authenticated(true).build();
+
+
+
+    }
+    public void logout (LogoutRequest request) {
+        Tokens tokens = tokenRepository.findByToken(request.getToken())
+                .orElseThrow(() -> new AppException(ErrorCode.TOKEN_NOT_EXIST);
+                
+                
+
+    }
+
 
     }
 
@@ -75,6 +94,7 @@ public class AuthenticationService {
              log.error("Khong the tao token", e);
              throw new RuntimeException(e);
          }
+
 
      }
      private String buildScope(User user){

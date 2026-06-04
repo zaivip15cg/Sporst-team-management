@@ -18,7 +18,6 @@ const allMenuItems = [
     { key: "/dashboard", label: "Dashboard",      icon: <HomeOutlined />,   roles: [] },
     { key: "/users",     label: "Quản lý User",   icon: <UserOutlined />,   roles: ["ADMIN"] },
     { key: "/teams",     label: "Quản lý Team",   icon: <TeamOutlined />,   roles: ["ADMIN", "COACH"] },
-    { key: "/members",   label: "Thành viên",     icon: <TeamOutlined />,   roles: [] },
     { key: "/profile",   label: "Hồ sơ cá nhân", icon: <IdcardOutlined />, roles: [] },
 ];
 

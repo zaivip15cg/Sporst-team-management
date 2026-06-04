@@ -31,7 +31,7 @@ export default function Login() {
                     <Form.Item
                         label="Email"
                         name="email"
-                        rules={[{ required: true, message: "Vui lòng nhập email" }]}
+                        rules={[{ required: true, message: "Vui lòng nhập email" }, { type: "email", message: "Email không hợp lệ" }]}
                     >
                         <Input />
                     </Form.Item>
@@ -40,8 +40,7 @@ export default function Login() {
                         label="Mật khẩu"
                         name="password"
                         rules={[
-                            { required: true, message: "Vui lòng nhập mật khẩu" }, 
-                            { type: "email", message: "Email không hợp lệ" }
+                            { required: true, message: "Vui lòng nhập mật khẩu" }
                         ]}
                     >
                         <Input.Password />
