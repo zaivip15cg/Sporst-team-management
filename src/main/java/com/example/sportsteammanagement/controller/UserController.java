@@ -52,6 +52,13 @@ public class UserController {
         return userService.getUser(userId);
     }
 
+    @GetMapping("/search")
+    public APIResponse<List<UserResponse>> searchUsers(@RequestParam String keyword) {
+        return APIResponse.<List<UserResponse>>builder()
+                .result(userService.findUserByName(keyword))
+                .build();
+    }
+
     @PutMapping("/{userId}")
     UserResponse updateUser(@PathVariable String userId, @RequestBody UserUpdateRequest request) {
 

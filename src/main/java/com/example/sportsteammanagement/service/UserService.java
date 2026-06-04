@@ -64,6 +64,8 @@ public class UserService {
 
 
 
+
+
     public UserResponse getMyInfo(){
         var context = SecurityContextHolder.getContext();
         String name = context.getAuthentication().getName();
@@ -84,7 +86,15 @@ public class UserService {
    @PostAuthorize("returnObject.email == authentication.name")
     public UserResponse getUser(String id){
         log.info("In method get user by Id");
-        return userMapper.toUserResponse(userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("khong thay gi het tron")));
+        return userMapper.toUserResponse(userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("khong thay thằng nào như thế het tron")));
+    }
+
+    public List<UserResponse> findUserByName(String keyword){
+        log.info("In method findUserByName");
+        return userRepository.findByNameContainingIgnoreCase(keyword)
+                .stream()
+                .map(userMapper::toUserResponse)
+                .toList();
     }
 
 

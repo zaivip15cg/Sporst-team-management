@@ -28,6 +28,10 @@ public class Team {
     @Column(name = "team_name", length = 100, unique = true)
     String teamName;
 
+    @ManyToOne
+    @JoinColumn(name="manager_id")
+    User manager;
+
     // created_by (ON DELETE SET NULL)
     @ManyToOne
     @JoinColumn(name = "created_by")
